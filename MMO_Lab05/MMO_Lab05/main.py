@@ -1,5 +1,4 @@
 import pandas as pd
-import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 from sklearn.linear_model import LinearRegression
@@ -19,7 +18,7 @@ plt.title('Матрица корреляций')
 plt.show()
 
 # Задание 3: Построение матрицы диаграмм рассеяния
-sns.pairplot(df, vars=['age', 'bmi', 'children', 'charges'])
+sns.pairplot(df, vars=['age', 'bmi', 'smoker_yes', 'charges'])
 plt.show()
 
 # Задание 5: Рассчет и визуализация модели простой линейной регрессии
@@ -72,6 +71,22 @@ y_test_pred_multi = model_multi.predict(X_test_multi)
 r2_multi = r2_score(y_test, y_test_pred_multi)
 mse_multi = mean_squared_error(y_test, y_test_pred_multi)
 mae_multi = mean_absolute_error(y_test, y_test_pred_multi)
+
+
+fig = plt.figure(figsize=(12, 6))
+ax = fig.add_subplot(111, projection='3d')
+
+ax.scatter(X_test_multi[:, 0], X_test_multi[:, 1], y_test, color='blue', label='Наблюдения')
+ax.scatter(X_test_multi[:, 0], X_test_multi[:, 1], y_test_pred_multi, color='red', label='Прогноз')
+
+ax.set_xlabel('Возраст')
+ax.set_ylabel('BMI')
+ax.set_zlabel('Затраты')
+ax.set_title('Модель с несколькими параметрами: Сравнение наблюдаемых значений и прогнозов')
+
+plt.legend()
+plt.show()
+
 
 print("Модель с несколькими параметрами:")
 print("R-квадрат (для тестовой выборки):", r2_multi)
