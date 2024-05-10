@@ -1,4 +1,5 @@
 import pandas as pd
+from scipy.cluster.hierarchy import linkage, dendrogram
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.cluster import KMeans, AgglomerativeClustering
 from sklearn.metrics import silhouette_score
@@ -56,10 +57,11 @@ hierarchical = AgglomerativeClustering(n_clusters=optimal_k)
 hierarchical_labels = hierarchical.fit_predict(X_scaled)
 
 # Шаг 7: Визуализация результатов иерархической кластеризации
-plt.scatter(X[param1], X[param2], c=hierarchical_labels)
+linkage_matrix = linkage(X_scaled, method='ward')  # Вычисление матрицы связей
+dendrogram(linkage_matrix)
 plt.xlabel(param1)
 plt.ylabel(param2)
-plt.title('Hierarchical Clustering')
+plt.title('Hierarchical Clustering Dendrogram')
 plt.show()
 
 # Шаг 8: Оценка качества кластеризации
